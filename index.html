@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Builder</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #cfceeb, #c0e1ed, #bae4f0, #f0f1f3);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
+}
+
+/* Animation */
+@keyframes gradientBG {
+    0%{
+        background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0% 50%;
+    }
+}
+
+/* Navbar */
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 80px;
+    background:white;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:700;
+    color:#2b2b2b;
+}
+
+.nav-buttons a{
+    text-decoration:none;
+    margin-left:20px;
+    padding:8px 18px;
+    border-radius:6px;
+    font-size:14px;
+    font-weight:500;
+    cursor:pointer;
+}
+
+.login{
+    color:#333;
+}
+
+.register{
+    background:#4f46e5;
+    color:white;
+}
+
+/* Hero Section */
+.hero{
+    text-align:center;
+    padding:100px 20px 60px;
+}
+
+.hero h1{
+    font-size:48px;
+    font-weight:700;
+    color:#111;
+}
+
+.hero h1 span{
+    color:#4f46e5;
+}
+
+.hero p{
+    margin-top:20px;
+    font-size:18px;
+    color:#555;
+}
+
+.hero-buttons{
+    margin-top:30px;
+}
+
+.hero-buttons a{
+    text-decoration:none;
+    padding:12px 28px;
+    border-radius:8px;
+    font-weight:600;
+    margin:0 10px;
+    cursor:pointer;
+}
+
+.get-started{
+    background:#4f46e5;
+    color:white;
+}
+
+.sign-in{
+    border:1px solid #ccc;
+    color:#333;
+    background:white;
+}
+
+/* Features */
+.features{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    padding:60px 80px;
+    flex-wrap:wrap;
+}
+
+.card{
+    background:rgb(233, 247, 233);
+    padding:30px;
+    width:250px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+    text-align:left;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+/* Form Section */
+.form-container{
+    display:none;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.form-card{
+    background:rgb(233, 247, 233);
+    width:400px;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.1);
+}
+
+.form-card h2{
+    text-align:center;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:gray;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+label{
+    font-weight:600;
+    font-size:14px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    margin-bottom:18px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:14px;
+}
+
+.password-wrapper{
+    position:relative;
+}
+
+.password-wrapper span{
+    position:absolute;
+    right:12px;
+    top:38px;
+    cursor:pointer;
+}
+
+.forgot{
+    text-align:right;
+    font-size:13px;
+    margin-top:-10px;
+    margin-bottom:20px;
+}
+
+.forgot a{
+    text-decoration:none;
+    color:#4f46e5;
+}
+
+.btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:linear-gradient(to right,#4e73df,#224abe);
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.back-home{
+    text-align:center;
+    margin-top:15px;
+    font-size:14px;
+}
+
+/* Template Page Styles */
+.templates-page{
+    display:none;
+}
+
+.templates-page .navbar{
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+.templates-page .logo{
+    color:#4f46e5;
+}
+
+.templates-page .user{
+    font-size:14px;
+}
+
+.templates-page .logout{
+    background:#4f46e5;
+    color:white;
+    padding:8px 16px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.templates-page .container{
+    padding:60px 80px;
+}
+
+.templates-page .container h1{
+    font-size:32px;
+}
+
+.templates-page .container p{
+    color:gray;
+    margin-top:10px;
+    margin-bottom:40px;
+}
+
+.templates-page .templates{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.templates-page .card{
+    background:white;
+    border-radius:25px;
+    width: 330px;
+    height: 360px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.05);
+    overflow:hidden;
+    transition:0.3s;
+}
+
+.templates-page .card:hover{
+    transform:translateY(-5px);
+}
+
+.templates-page .preview{
+    height:180px;
+    background:linear-gradient(to right,#dbeafe,#e0e7ff);
+    padding:20px;
+}
+
+.templates-page .line{
+    height:8px;
+    background:#cbd5e1;
+    margin-bottom:10px;
+    border-radius:4px;
+}
+
+.templates-page .line.small{
+    width:60%;
+}
+
+.templates-page .line.medium{
+    width:80%;
+}
+
+.templates-page .line.large{
+    width:100%;
+}
+
+.templates-page .card-body{
+    padding:20px;
+}
+
+.templates-page .card-body h3{
+    margin-bottom:10px;
+}
+
+.templates-page .type{
+    font-size:12px;
+    background:#eef2ff;
+    color:#4f46e5;
+    padding:4px 10px;
+    border-radius:20px;
+    display:inline-block;
+    margin-bottom:15px;
+}
+
+.templates-page .use-btn{
+    width:100%;
+    padding:10px;
+    border:none;
+    background:linear-gradient(to right,#4e73df,#224abe);
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+.top-bar{
+    padding:20px 40px;
+}
+
+.back-btn{
+    background:white;
+    color:#333;
+    border:none;
+    padding:8px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.back-btn:hover{
+    background:#f0f0f0;
+}
+.logo {
+    display: flex;
+    flex-direction: column;   /* This makes text go below */
+}
+
+.developer-text {
+    font-size: 12px;
+    color: #777;
+    margin-top: 2px;
+}
+.error-message{
+    color:red;
+    font-size:13px;
+    margin-top:-10px;
+    margin-bottom:15px;
+    display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Landing Page -->
+<div id="landingPage">
+<!-- Navbar -->
+<div class="navbar">
+    <div class="logo">Online Resume Builder</div>
+    <div class="nav-buttons">
+        <a onclick="showLogin()" class="login">Login</a>
+        <a onclick="showRegister()" class="register">Register</a>
+    </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <h1>Build Your <span>Professional Resume</span></h1>
+    <p>Create stunning, job-winning resumes in minutes. Choose a templete , fill <br>in your details, and land your dream job.</p>
+    
+    <div class="hero-buttons">
+        <a onclick="showRegister()" class="get-started">Get Started Free</a>
+        <a onclick="showLogin()" class="sign-in">Sign In</a>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features" id="features">
+    <div class="card">📄 <h3>Professional Templates</h3><p>Choose from beautifully crafted resume templetes.</p></div>
+    <div class="card">✨ <h3>Easy to Use</h3><br><p>Build your resume in minutes with our intuitive editor.</p></div>
+    <div class="card">🎨 <h3>Fully Customizable</h3><br><p>Personalize colors,fonts and layouts to match your style.</p></div>
+    <div class="card">⬇ <h3>Instant Download</h3><br><p>Export your resume as PDF with a single click.</p></div>
+</section>
+
+<!-- Register Form -->
+  <div class="top-bar">
+        <button onclick="window.location.href='combine2.html'" class="back-btn">Back</button>
+    </div>
+<div class="form-container" id="registerForm">
+    <div class="form-card">
+
+        <h2>Create Account</h2>
+        <div class="subtitle">Start building your professional resume</div>
+        <form action="http://localhost/resume_backend4/register.php" method="POST" onsubmit="registerUser(event)">
+        <label>Full Name:</label>
+        <input type="text" id="regName" name="full_name" placeholder="John Doe" required autocomplete="off">
+        <label>Email:</label>
+        <input type="email" id="regEmail" name="email" placeholder="you@example.com" required autocomplete="off">
+        <div class="password-wrapper">
+            <label>Password:</label>
+            <input type="password" id="regPassword" name="password" placeholder="********" required autocomplete="new-password">
+            <span onclick="togglePassword('regPassword')">👁</span>
+        </div>
+
+        <div class="forgot">
+        <a href="#" onclick="showChangePassword()">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn">Create Account</button>
+        </form>
+        <div class="back-home">
+    Already have an account? 
+    <span style="color:#4f46e5; cursor:pointer; font-weight:600;" onclick="showLogin()">
+        Sign In
+    </span>
+</div>
+    </div>
+</div>
+
+<!-- Login Form -->
+<div class="form-container" id="loginForm">
+    <div class="form-card">
+         <form onsubmit="loginUser(event)" action="http://localhost/resume_backend4/login.php" method="POST">
+        <h2>Login</h2>
+        <div class="subtitle">Welcome back!</div>
+
+        <label>Email:</label>
+        <input type="email" id="loginEmail" name="email" placeholder="you@example.com" required autocomplete="off">
+
+        <div class="password-wrapper">
+            <label>Password:</label>
+            <input type="password" id="loginPassword" name="password" placeholder="********" required autocomplete="new-password">
+            <span onclick="togglePassword('loginPassword')">👁</span>
+        </div>
+<p id="loginError" class="error-message"></p>
+        <div class="forgot">
+        <a href="#" onclick="showChangePassword()">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+         </form>
+       <div class="back-home">
+    Don’t have an account? 
+    <span style="color:#4f46e5; cursor:pointer; font-weight:600;" onclick="showRegister()">
+        Register
+    </span>
+</div>
+    </div>
+</div>
+<!-- Change Password Form -->
+<div class="form-container" id="changePasswordForm" style="display:none;">
+    <div class="form-card">
+        <h2>Change Password</h2>
+        <div class="subtitle">Set your new password</div>
+<form action="http://localhost/resume_backend4/change_password.php" method="POST"></form>
+        <div class="password-wrapper">
+            <label>New Password:</label>
+            <input type="password" id="newPassword" placeholder="Enter new password" required autocomplete="off">
+            <span onclick="togglePassword('newPassword')">👁</span>
+        </div>
+
+        <div class="password-wrapper">
+            <label>Confirm Password:</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm password" required autocomplete="new-password">
+            <span onclick="togglePassword('confirmPassword')">👁</span>
+        </div>
+
+        <button type="submit" class="btn">Update Password</button>
+ </form>
+        <div class="back-home">
+            Remember password?
+            <span style="color:#4f46e5; cursor:pointer; font-weight:600;" onclick="showLogin()">
+                Back to Login
+            </span>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Template Page -->
+<div class="templates-page" id="templatePage">
+<div class="navbar">
+    <!-- Success Message -->
+<div id="loginMessage" 
+     style="display:none; 
+            background:#d1fae5; 
+            color:#065f46; 
+            padding:12px; 
+            text-align:center; 
+            font-weight:600;">
+    Welcome back! Login Successful! 🎉
+</div>
+    <div class="logo">OnlineResumeBuilder<p class="developer-text">Developed by Anushree</p></div>
+    <div class="user">
+    Hi, <span id="usernameDisplay"></span> 👋
+        <button class="logout" onclick="logout()">Logout</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="top-bar">
+        <button onclick="window.location.href='combine2.html'" class="back-btn">Back</button>
+    </div>
+    <h1>Choose a Template</h1>
+    <p>Pick a design that suits your style and start building your resume.</p>
+
+    <div class="templates">
+
+        <!-- Template 1 -->
+        <div class="card" onclick="window.location.href='clean3.html'">
+            <div class="preview"  style="background:linear-gradient(to right,#fef9c3,#fde68a);">
+                <div class="line large"></div>
+                <div class="line medium"></div>
+                <div class="line small"></div>
+            </div>
+            <div class="card-body">
+                <h3>Clean Modern</h3>
+                <div class="type">Modern</div>
+                <button class="use-btn">Use Template</button>
+            </div>
+        </div>
+
+        <!-- Template 2 -->
+         
+        <div class="card" onclick="window.location.href='classic2.html'">
+            <div class="preview" style="background:linear-gradient(to right,#d1fae5,#a7f3d0);">
+                <div class="line large"></div>
+                <div class="line medium"></div>
+                <div class="line small"></div>
+            </div>
+            <div class="card-body">
+                <h3>Classic Elegance</h3>
+                <div class="type">Classic</div>
+                <button class="use-btn">Use Template</button>
+            </div>
+        </div>
+
+        <!-- Template 3 -->
+        <div class="card" onclick="window.location.href='bold1.html'">
+            <div class="preview" style="background:linear-gradient(to right,#fbcfe8,#f9a8d4);">
+                <div class="line medium"></div>
+                <div class="line large"></div>
+                <div class="line medium"></div>
+            </div>
+            <div class="card-body">
+                <h3>Bold Creative</h3>
+                <div class="type">Creative</div>
+                <button class="use-btn">Use Template</button>
+            </div>
+        </div>
+        
+        <!-- Template 4 -->
+        <div class="card" onclick="window.location.href='minimal1.html'">
+            <div class="preview" style="background:linear-gradient(to right,#c7eff8,#86cbe2);">
+                <div class="line large"></div>
+                <div class="line small"></div>
+                <div class="line medium"></div>
+            </div>
+            <div class="card-body">
+                <h3>Minimal Pro</h3>
+                <div class="type">Minimal</div>
+                <button class="use-btn">Use Template</button>
+            </div>
+        </div>
+
+<!-- Template 5 -->
+<div class="card" onclick="window.location.href='executive1.html'">
+    <div class="preview" style="background:linear-gradient(to right,#dff4ec,#80d8ae);">
+        <div class="line large"></div>
+        <div class="line medium"></div>
+        <div class="line large"></div>
+    </div>
+    <div class="card-body">
+        <h3>Executive Edge</h3>
+        <div class="type">Corporate</div>
+        <button class="use-btn">Use Template</button>
+    </div>
+</div>
+
+<!-- Template 6 -->
+<div class="card" onclick="window.location.href='designer1.html'">
+    <div class="preview" style="background:linear-gradient(to right,#edadf0,#de79ec);">
+        <div class="line medium"></div>
+        <div class="line large"></div>
+        <div class="line medium"></div>
+    </div>
+    <div class="card-body">
+        <h3>Creative Spark</h3>
+        <div class="type">Designer</div>
+        <button class="use-btn">Use Template</button>
+    </div>
+</div>
+<!-- Template 7 -->
+<div class="card"  onclick="window.location.href='bright.html'">
+    <div class="preview" style="background:linear-gradient(to right,#b5e3b5,#64e969);">
+        <div class="line medium"></div>
+        <div class="line large"></div>
+        <div class="line small"></div>
+    </div>
+    <div class="card-body">
+        <h3>Bright Begin</h3>
+        <div class="type">Bright</div>
+        <button class="use-btn">Use Template</button>
+    </div>
+</div>
+
+<!-- Template 8 -->
+<div class="card"  onclick="window.location.href='sharp.html'">
+    <div class="preview" style="background:linear-gradient(to right,#e8eaa8,#dce557);">
+        <div class="line medium"></div>
+        <div class="line large"></div>
+        <div class="line medium"></div>
+    </div>
+    <div class="card-body">
+        <h3>Sharp CV</h3>
+        <div class="type">Sharp</div>
+        <button class="use-btn">Use Template</button>
+    </div>
+</div>
+
+    </div>
+    
+</div>
+</div>
+
+
+<script>
+function showRegister(){
+    document.getElementById("home").style.display="none";
+    document.getElementById("features").style.display="none";
+    document.getElementById("registerForm").style.display="flex";
+    document.getElementById("loginForm").style.display="none";
+}
+
+function showLogin(){
+    document.getElementById("home").style.display="none";
+    document.getElementById("features").style.display="none";
+    document.getElementById("loginForm").style.display="flex";
+    document.getElementById("registerForm").style.display="none";
+}
+
+function goHome(){
+    document.getElementById("home").style.display="block";
+    document.getElementById("features").style.display="flex";
+    document.getElementById("registerForm").style.display="none";
+    document.getElementById("loginForm").style.display="none";
+    document.getElementById("changePasswordForm").style.display="none";
+    document.getElementById("templatePage").style.display="none";
+    document.getElementById("landingPage").style.display="block";
+}
+
+function togglePassword(id){
+    var pass = document.getElementById(id);
+    pass.type = pass.type === "password" ? "text" : "password";
+}
+function showChangePassword(){
+    document.getElementById("home").style.display="none";
+    document.getElementById("features").style.display="none";
+    document.getElementById("loginForm").style.display="none";
+    document.getElementById("registerForm").style.display="none";
+    document.getElementById("changePasswordForm").style.display="flex";
+}
+function showChangePassword(){
+    document.getElementById("home").style.display="none";
+    document.getElementById("features").style.display="none";
+    document.getElementById("loginForm").style.display="none";
+    document.getElementById("registerForm").style.display="none";
+    document.getElementById("changePasswordForm").style.display="flex";
+}
+
+function showTemplate(){
+    document.getElementById("landingPage").style.display="none";
+    document.getElementById("templatePage").style.display="block";
+    var storedName = localStorage.getItem("currentuser");
+    if(storedName){
+    document.getElementById("usernameDisplay").innerText = storedName;
+    }
+    // Show success message
+    document.getElementById("loginMessage").style.display="block";
+
+    // Hide message after 3 seconds
+    setTimeout(function(){
+        document.getElementById("loginMessage").style.display="none";
+    }, 3000);
+}
+function logout(){
+    localStorage.removeItem("currentUser");
+    goHome();
+}
+
+function registerUser(event){
+    event.preventDefault();
+
+    var name = document.getElementById("regName").value.trim();
+    var email = document.getElementById("regEmail").value.trim();
+    var password = document.getElementById("regPassword").value.trim();
+
+    var users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Check if email already exists
+    var emailExists = users.some(user => user.email === email);
+
+    if(emailExists){
+        alert("Email already registered! Please login.");
+        return;
+    }
+
+    // Add new user
+    users.push({
+        name: name,
+        email: email,
+        password: password
+    });
+
+    localStorage.setItem("users", JSON.stringify(users));
+    alert("Account Created Successfully!");
+
+    event.target.reset();
+    showTemplate();
+    document.getElementById("usernameDisplay").innerText = name;
+}
+function loginUser(event){
+    event.preventDefault();
+
+    var email = document.getElementById("loginEmail").value.trim();
+    var password = document.getElementById("loginPassword").value.trim();
+    var errorMsg = document.getElementById("loginError");
+
+    errorMsg.style.display = "none";
+
+    var users = JSON.parse(localStorage.getItem("users")) || [];
+
+    var validUser = users.find(user => 
+        user.email === email && user.password === password
+    );
+
+    if(validUser){
+        localStorage.setItem("currentUser", validUser.name);
+        showTemplate();
+        document.getElementById("usernameDisplay").innerText = validUser.name;
+        event.target.reset();
+    } else {
+        errorMsg.innerText = "Invalid Email or Password";
+        errorMsg.style.display = "block";
+        event.target.reset();
+    }
+}
+window.onload = function() {
+    var currentUser = localStorage.getItem("currentUser");
+
+    if(currentUser){
+        document.getElementById("landingPage").style.display="none";
+        document.getElementById("templatePage").style.display="block";
+        document.getElementById("usernameDisplay").innerText = currentUser;
+    }
+};
+
+</script>
+</body>
+</html>
