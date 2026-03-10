@@ -6,6 +6,7 @@
 <title>Resume Builder</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 *{
@@ -18,7 +19,7 @@
 body{
     margin:0;
     font-family:'Poppins', sans-serif;
-    background: linear-gradient(-45deg, #cfceeb, #c0e1ed, #bae4f0, #f0f1f3);
+    background: linear-gradient(-45deg, #cfceeb, #c5eaed, #bae4f0, #f0f1f3);
     background-size: 400% 400%;
     animation: gradientBG 10s ease infinite;
 }
@@ -372,7 +373,7 @@ input{
 }
 /* Footer */
 .footer{
-    background:#6cd2ee;
+    background:#87d9ef;
     color:#e5e7eb;
     padding:50px 80px 20px;
     margin-top:60px;
@@ -416,83 +417,23 @@ input{
     font-size:13px;
     color:#212224;
 }
-/* ================= MOBILE RESPONSIVE ================= */
-@media (max-width: 768px) {
+footer{
+    text-align:center;
+    padding:15px;
+}
 
-    /* Navbar */
-    .navbar {
-        flex-direction: column;
-        padding: 15px 20px;
-        text-align: center;
-        gap: 10px;
-    }
+footer a{
+    margin:0 10px;
+    font-size:24px;
+    text-decoration:none;
+}
 
-    .nav-buttons a {
-        margin: 5px;
-        display: inline-block;
-    }
+.fa-instagram{
+    color:#E4405F;
+}
 
-    /* Hero */
-    .hero {
-        padding: 60px 20px;
-    }
-
-    .hero h1 {
-        font-size: 28px;
-    }
-
-    .hero p {
-        font-size: 15px;
-    }
-
-    .hero-buttons a {
-        display: block;
-        margin: 10px 0;
-    }
-
-    /* Features */
-    .features {
-        flex-direction: column;
-        padding: 40px 20px;
-        align-items: center;
-    }
-
-    .card {
-        width: 100%;
-        max-width: 320px;
-    }
-
-    /* Forms */
-    .form-container {
-        height: auto;
-        padding: 40px 20px;
-    }
-
-    .form-card {
-        width: 100%;
-    }
-
-    /* Template Page */
-    .templates-page .container {
-        padding: 40px 20px;
-    }
-
-    .templates-page .card {
-        width: 100%;
-        height: auto;
-    }
-
-    /* Footer */
-    .footer {
-        padding: 40px 20px;
-        text-align: center;
-    }
-
-    .footer-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
+.fa-linkedin{
+    color:#0077B5;
 }
 
 </style>
@@ -509,7 +450,7 @@ input{
         <a onclick="showLogin()" class="login">Login</a>
         <a onclick="showRegister()" class="register">Register</a>
     </div>
-    </div>
+</div>
 
 <!-- Hero Section -->
 <section class="hero" id="home">
@@ -562,6 +503,14 @@ input{
                 Developed by <strong>Anushree</strong> 💻  
                 <br>
                 Passionate Full Stack Developer
+<br>
+<a href="https://instagram.com/anushree_pinki" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+
+    <a href="https://www.linkedin.com/in/anushree-d-3a1537330?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">
+        <i class="fa-brands fa-linkedin"></i>
+    </a> 
             </p>
         </div>
 
@@ -572,9 +521,8 @@ input{
     </div>
 </footer>
 
-
 <!-- Register Form -->
-<div class="top-bar" id="formBackBtn" style="display:none;">
+ <div class="top-bar" id="formBackBtn" style="display:none;">
     <button onclick="goHome()" class="back-btn">← Back</button>
 </div>
 <div class="form-container" id="registerForm">
@@ -644,7 +592,7 @@ input{
     <div class="form-card">
         <h2>Change Password</h2>
         <div class="subtitle">Set your new password</div>
-<form action="http://localhost/resume_backend4/change_password.php" method="POST"></form>
+<form action="http://localhost/resume_backend4/change_password.php" method="POST">
         <div class="password-wrapper">
             <label>New Password:</label>
             <input type="password" id="newPassword" placeholder="Enter new password" required autocomplete="off">
@@ -691,7 +639,7 @@ input{
 
 <div class="container">
     <div class="top-bar">
-        <button onclick="goHome()" class="back-btn">Back</button>
+    <button onclick="window.location.href='index.html#templates'">Back</button>
     </div>
     <h1>Choose a Template</h1>
     <p>Pick a design that suits your style and start building your resume.</p>
@@ -699,7 +647,7 @@ input{
     <div class="templates">
 
         <!-- Template 1 -->
-        <div class="card" onclick="window.location.href='clean3.html'">
+        <div class="card" onclick="window.location.href='alter2.html'">
             <div class="preview"  style="background:linear-gradient(to right,#fef9c3,#fde68a);">
                 <div class="line large"></div>
                 <div class="line medium"></div>
@@ -714,7 +662,7 @@ input{
 
         <!-- Template 2 -->
          
-        <div class="card" onclick="window.location.href='classic2.html'">
+        <div class="card" onclick="window.location.href='classicalter.html'">
             <div class="preview" style="background:linear-gradient(to right,#d1fae5,#a7f3d0);">
                 <div class="line large"></div>
                 <div class="line medium"></div>
@@ -728,7 +676,7 @@ input{
         </div>
 
         <!-- Template 3 -->
-        <div class="card" onclick="window.location.href='bold1.html'">
+        <div class="card" onclick="window.location.href='boldalter.html'">
             <div class="preview" style="background:linear-gradient(to right,#fbcfe8,#f9a8d4);">
                 <div class="line medium"></div>
                 <div class="line large"></div>
@@ -742,7 +690,7 @@ input{
         </div>
         
         <!-- Template 4 -->
-        <div class="card" onclick="window.location.href='minimal1.html'">
+        <div class="card" onclick="window.location.href='minimalalter.html'">
             <div class="preview" style="background:linear-gradient(to right,#c7eff8,#86cbe2);">
                 <div class="line large"></div>
                 <div class="line small"></div>
@@ -782,6 +730,7 @@ input{
         <button class="use-btn">Use Template</button>
     </div>
 </div>
+
 <!-- Template 7 -->
 <div class="card"  onclick="window.location.href='bright.html'">
     <div class="preview" style="background:linear-gradient(to right,#b5e3b5,#64e969);">
@@ -821,7 +770,7 @@ function showRegister(){
     document.getElementById("home").style.display="none";
     document.getElementById("features").style.display="none";
     document.getElementById("mainFooter").style.display="none";
-      document.getElementById("formBackBtn").style.display="block";
+    document.getElementById("formBackBtn").style.display="block"; 
     document.getElementById("registerForm").style.display="flex";
     document.getElementById("loginForm").style.display="none";
 }
@@ -830,7 +779,7 @@ function showLogin(){
     document.getElementById("home").style.display="none";
     document.getElementById("features").style.display="none";
     document.getElementById("mainFooter").style.display="none";
-      document.getElementById("formBackBtn").style.display="block";
+    document.getElementById("formBackBtn").style.display="block"; 
     document.getElementById("loginForm").style.display="flex";
     document.getElementById("registerForm").style.display="none";
 }
@@ -839,7 +788,7 @@ function goHome(){
     document.getElementById("home").style.display="block";
     document.getElementById("features").style.display="flex";
     document.getElementById("mainFooter").style.display="block";
-      document.getElementById("formBackBtn").style.display="none";
+    document.getElementById("formBackBtn").style.display="none"; 
     document.getElementById("registerForm").style.display="none";
     document.getElementById("loginForm").style.display="none";
     document.getElementById("changePasswordForm").style.display="none";
@@ -855,12 +804,20 @@ function showChangePassword(){
     document.getElementById("home").style.display="none";
     document.getElementById("features").style.display="none";
     document.getElementById("mainFooter").style.display="none";
+    document.getElementById("formBackBtn").style.display="block"; 
     document.getElementById("loginForm").style.display="none";
-      document.getElementById("formBackBtn").style.display="block";
     document.getElementById("registerForm").style.display="none";
     document.getElementById("changePasswordForm").style.display="flex";
 }
-
+function showChangePassword(){
+    document.getElementById("home").style.display="none";
+    document.getElementById("features").style.display="none";
+    document.getElementById("mainFooter").style.display="none";
+    document.getElementById("formBackBtn").style.display="block"; 
+    document.getElementById("loginForm").style.display="none";
+    document.getElementById("registerForm").style.display="none";
+    document.getElementById("changePasswordForm").style.display="flex";
+}
 
 function showTemplate(){
     document.getElementById("landingPage").style.display="none";
