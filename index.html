@@ -19,7 +19,7 @@
 body{
     margin:0;
     font-family:'Poppins', sans-serif;
-    background: linear-gradient(-45deg, #cfceeb, #c5eaed, #bae4f0, #f0f1f3);
+    background: linear-gradient(-45deg, #e68fe3, #d3ecee, #93d5e8, #81ea81);
     background-size: 400% 400%;
     animation: gradientBG 10s ease infinite;
 }
@@ -356,7 +356,7 @@ input{
 }
 .logo {
     display: flex;
-    flex-direction: column;   /* This makes text go below */
+   align-items: center;   /* This makes text go below */
 }
 
 .developer-text {
@@ -435,7 +435,65 @@ footer a{
 .fa-linkedin{
     color:#0077B5;
 }
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:22px;
+    font-weight:700;
+    color:#2b2b2b;
+}
 
+.logo-img{
+    width:50px;
+    height:50px;
+    object-fit:contain;
+}
+.logo div{
+    display:flex;
+    flex-direction:column;
+}
+/* DARK MODE */
+.dark-mode {
+    background:#7f7d7d !important;
+    color:#f1f1f1;
+}
+
+.dark-mode .navbar{
+    background:#7f7d7d;
+}
+
+.dark-mode .card,
+.dark-mode .form-card{
+    background:#000000;
+    color:white;
+}
+
+.dark-mode input{
+    background:#7f7d7d;
+    color:white;
+    border:1px solid #444;
+}
+
+.dark-mode .footer{
+    background:#7f7d7d;
+    color:white;
+}
+
+.dark-mode .footer-section p,
+.dark-mode .footer-section li{
+    color:#ccc;
+}
+
+.dark-mode .hero p{
+    color:#ccc;
+}
+
+.dark-mode .sign-in{
+    background:#222;
+    color:white;
+    border:1px solid #555;
+}
 </style>
 </head>
 
@@ -445,10 +503,24 @@ footer a{
 <div id="landingPage">
 <!-- Navbar -->
 <div class="navbar">
-    <div class="logo">Online Resume Builder</div>
+<div class="logo">
+    <img src="logo.png" alt="Logo" class="logo-img">
+    <span>Online Resume Builder</span>
+</div>
     <div class="nav-buttons">
         <a onclick="showLogin()" class="login">Login</a>
         <a onclick="showRegister()" class="register">Register</a>
+        <button onclick="toggleTheme()" id="themeToggle" style="
+    margin-left:20px;
+    padding:8px 14px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    background:#565252;
+    color:white;
+">
+🌙
+</button>
     </div>
 </div>
 
@@ -465,7 +537,7 @@ footer a{
 
 <!-- Features -->
 <section class="features" id="features">
-    <div class="card">📄 <h3>Professional Templates</h3><p>Choose from beautifully crafted resume templetes.</p></div>
+    <div class="card">📄 <h3>Professional Templates</h3><br><p>Choose from beautifully crafted resume templetes.</p></div>
     <div class="card">✨ <h3>Easy to Use</h3><br><p>Build your resume in minutes with our intuitive editor.</p></div>
     <div class="card">🎨 <h3>Fully Customizable</h3><br><p>Personalize colors,fonts and layouts to match your style.</p></div>
     <div class="card">⬇ <h3>Instant Download</h3><br><p>Export your resume as PDF with a single click.</p></div>
@@ -630,7 +702,14 @@ footer a{
             font-weight:600;">
     Welcome back! Login Successful! 🎉
 </div>
-    <div class="logo">OnlineResumeBuilder<p class="developer-text">Developed by Anushree</p></div>
+<div class="logo">
+    <img src="logo.png" alt="Logo" class="logo-img">
+
+    <div>
+        <span>Online Resume Builder</span>
+        <p class="developer-text">Developed by Anushree</p>
+    </div>
+</div>
     <div class="user">
     Hi, <span id="usernameDisplay"></span> 👋
         <button class="logout" onclick="logout()">Logout</button>
@@ -639,7 +718,7 @@ footer a{
 
 <div class="container">
     <div class="top-bar">
-    <button onclick="window.location.href='/'">Back</button>
+ <button onclick="goHome()" class="back-btn">← Back</button>
     </div>
     <h1>Choose a Template</h1>
     <p>Pick a design that suits your style and start building your resume.</p>
@@ -647,8 +726,8 @@ footer a{
     <div class="templates">
 
         <!-- Template 1 -->
-        <div class="card" onclick="window.location.href='alter2.html'">
-            <div class="preview"  style="background:linear-gradient(to right,#fef9c3,#fde68a);">
+        <div class="card" onclick="window.location.href='alter3.html'">
+            <div class="preview"  style="background:linear-gradient(to right,#bdadf2,#4c59d1);">
                 <div class="line large"></div>
                 <div class="line medium"></div>
                 <div class="line small"></div>
@@ -662,8 +741,8 @@ footer a{
 
         <!-- Template 2 -->
          
-        <div class="card" onclick="window.location.href='classicalter.html'">
-            <div class="preview" style="background:linear-gradient(to right,#d1fae5,#a7f3d0);">
+        <div class="card" onclick="window.location.href='classicalter1.html'">
+            <div class="preview" style="background:linear-gradient(to right,#7ad7a7,#5ae5a4);">
                 <div class="line large"></div>
                 <div class="line medium"></div>
                 <div class="line small"></div>
@@ -676,8 +755,8 @@ footer a{
         </div>
 
         <!-- Template 3 -->
-        <div class="card" onclick="window.location.href='boldalter.html'">
-            <div class="preview" style="background:linear-gradient(to right,#fbcfe8,#f9a8d4);">
+        <div class="card" onclick="window.location.href='boldalter3.html'">
+            <div class="preview" style="background:linear-gradient(to right,#fbb5e5,#fa2fac);">
                 <div class="line medium"></div>
                 <div class="line large"></div>
                 <div class="line medium"></div>
@@ -690,8 +769,8 @@ footer a{
         </div>
         
         <!-- Template 4 -->
-        <div class="card" onclick="window.location.href='minimalalter.html'">
-            <div class="preview" style="background:linear-gradient(to right,#c7eff8,#86cbe2);">
+        <div class="card" onclick="window.location.href='minimalalter1.html'">
+            <div class="preview" style="background:linear-gradient(to right,#d7a5e9,#c841e0);">
                 <div class="line large"></div>
                 <div class="line small"></div>
                 <div class="line medium"></div>
@@ -704,8 +783,8 @@ footer a{
         </div>
 
 <!-- Template 5 -->
-<div class="card" onclick="window.location.href='executive1.html'">
-    <div class="preview" style="background:linear-gradient(to right,#dff4ec,#80d8ae);">
+<div class="card" onclick="window.location.href='executive.html'">
+    <div class="preview" style="background:linear-gradient(to right,#a8abaa,#979897);">
         <div class="line large"></div>
         <div class="line medium"></div>
         <div class="line large"></div>
@@ -718,8 +797,8 @@ footer a{
 </div>
 
 <!-- Template 6 -->
-<div class="card" onclick="window.location.href='designer1.html'">
-    <div class="preview" style="background:linear-gradient(to right,#edadf0,#de79ec);">
+<div class="card" onclick="window.location.href='designer.html'">
+    <div class="preview" style="background:linear-gradient(to right,#66c3cb,#239ba1);">
         <div class="line medium"></div>
         <div class="line large"></div>
         <div class="line medium"></div>
@@ -732,8 +811,8 @@ footer a{
 </div>
 
 <!-- Template 7 -->
-<div class="card"  onclick="window.location.href='bright.html'">
-    <div class="preview" style="background:linear-gradient(to right,#b5e3b5,#64e969);">
+<div class="card"  onclick="window.location.href='bright1.html'">
+    <div class="preview" style="background:linear-gradient(to right,#de8b78,#b04729);">
         <div class="line medium"></div>
         <div class="line large"></div>
         <div class="line small"></div>
@@ -746,8 +825,8 @@ footer a{
 </div>
 
 <!-- Template 8 -->
-<div class="card"  onclick="window.location.href='sharp.html'">
-    <div class="preview" style="background:linear-gradient(to right,#e8eaa8,#dce557);">
+<div class="card"  onclick="window.location.href='sharp1.html'">
+    <div class="preview" style="background:linear-gradient(to right,#e37294,#e71856);">
         <div class="line medium"></div>
         <div class="line large"></div>
         <div class="line medium"></div>
@@ -904,8 +983,37 @@ window.onload = function() {
         document.getElementById("templatePage").style.display="block";
         document.getElementById("usernameDisplay").innerText = currentUser;
     }
-};
 
+    // Apply saved theme
+    let savedTheme = localStorage.getItem("theme");
+
+    if(savedTheme === "dark"){
+        document.body.classList.add("dark-mode");
+        let btn = document.getElementById("themeToggle");
+        if(btn){
+            btn.innerText = "☀";
+            btn.style.background = "#f1f1f1";
+            btn.style.color = "#111";
+        }
+    }
+};
+function toggleTheme(){
+    document.body.classList.toggle("dark-mode");
+
+    let btn = document.getElementById("themeToggle");
+
+    if(document.body.classList.contains("dark-mode")){
+        btn.innerText = "☀";
+        btn.style.background = "#f1f1f1";
+        btn.style.color = "#111";
+        localStorage.setItem("theme", "dark");
+    } else {
+        btn.innerText = "🌙";
+        btn.style.background = "#111";
+        btn.style.color = "#fff";
+        localStorage.setItem("theme", "light");
+    }
+}
 </script>
 </body>
 </html>

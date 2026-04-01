@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Resume Builder</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    display:flex;
+    background:#f2f3f7;
+    padding-top: 80px;
+}
+
+/* LEFT PANEL */
+.left-panel{
+    width:400px;
+    background:#fff;
+    padding:20px;
+    height:100vh;
+    padding-top: 60px;
+    overflow-y:auto;
+    box-shadow:2px 0 8px rgba(0,0,0,0.05);
+}
+
+h2{ margin-bottom:15px; }
+
+/* TABS */
+.tabs{
+    display:flex;
+    background:#b63bf8;
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:20px;
+}
+
+.tabs button{
+    flex:1;
+    padding:10px;
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.tabs button.active{
+    background:rgb(226, 167, 253);
+    border-radius:10px;
+}
+
+/* INPUTS */
+input,textarea{
+    width:90%;
+    padding:10px;
+    margin-bottom:12px;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
+textarea{
+    resize:none;
+    height:70px;
+}
+
+/* RIGHT RESUME */
+.resume{
+    width:185mm;
+    height: 260mm;
+    background: white;
+    margin: 10mm auto;
+    display:flex;
+    border: 4px solid #af36ef;
+    box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    background:white;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:35%;
+    background:linear-gradient(180deg,#af36ef,#d17cf9);
+    color:white;
+    padding:30px 20px;
+}
+
+.sidebar img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    display:block;
+    margin:0 auto 20px;
+    border:3px solid white;
+}
+
+.sidebar h4{
+    margin-top:25px;
+    font-size:13px;
+    letter-spacing:1px;
+}
+
+.sidebar p{
+    font-size:14px;
+    margin:6px 0;
+}
+
+/* CONTENT */
+.content{
+    width:65%;
+    padding:40px;
+}
+
+.content h1{
+    color:#b74af1;
+    margin:0;
+}
+
+.content h3{
+    font-size:13px;
+    letter-spacing:1px;
+    color:#b74af1;
+    border-bottom:2px solid #eee;
+    padding-bottom:6px;
+}
+
+.section{
+    margin-top:25px;
+}
+
+.export-btn{
+    position:fixed;
+    top:130px;
+    right:20px;
+    background:#9f37d7;
+    color:white;
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+
+.hidden{ display:none; 
+}
+.back-btn{
+    background:white;
+    color:#333;
+    border:none;
+    padding:8px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.back-btn:hover{
+    background:#f0f0f0;
+}
+.stars span{
+font-size:18px;
+cursor:pointer;
+color:#b1b1b1;
+margin-right:3px;
+}
+
+.stars span.active{
+color:gold;
+}
+.skill-row,
+.lang-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:5px 0;
+}
+
+.star-display{
+color:rgb(255, 217, 0);
+font-size:14px;
+letter-spacing:2px;
+}
+.top-buttons{
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    display: flex;
+    flex-direction: column; /* stack buttons */
+    gap: 10px; /* space between buttons */
+}
+.preview-btn, .export-btn{
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #b74af1;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+body{
+display:flex;
+justify-content:center;
+align-items:flex-start;
+background:#f2f3f7;
+padding:40px;
+}
+.navbar{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:70px;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    padding:0 30px;
+    box-sizing: border-box;
+    background:white;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    z-index:600;
+}
+
+/* LEFT */
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-img{
+    width:45px;
+    height:45px;
+}
+
+.logo-text{
+    font-size:24px;
+    font-weight:700;
+    color:#2b2b2b;
+}
+
+/* RIGHT */
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.user-text{
+    font-size:15px;
+    font-weight:500;
+}
+
+.logout-btn{
+    padding:8px 16px;
+    border:none;
+    border-radius:6px;
+    background:#af36ef; /* your orange theme */
+    color:white;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+    <div class="navbar">
+
+    <!-- LEFT SIDE -->
+    <div class="logo">
+        <img src="logo.png" class="logo-img">
+        <span class="logo-text">Online Resume Builder</span>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="nav-right">
+        <span class="user-text">
+            Hi, <span id="usernameDisplay"></span> 👋
+        </span>
+        <button onclick="logout()" class="logout-btn">Logout</button>
+    </div>
+
+</div>
+<div class="top-buttons">
+<button class="preview-btn" onclick="previewResume()">Preview</button>
+<button class="export-btn" onclick="showPasswordPopup()">Export</button></div>
+
+<!-- LEFT EDIT PANEL -->
+<div class="left-panel">
+<div class="top-bar">
+        <button onclick="window.location.href='combine2.html'" class="back-btn">Back</button>
+    </div>
+<h2>Edit Resume</h2>
+
+<div class="tabs">
+<button class="active" onclick="showTab('personal',this)">Personal</button>
+<button onclick="showTab('skills',this)">Skills</button>
+<button onclick="showTab('history',this)">History</button>
+</div>
+
+<!-- PERSONAL -->
+<div id="personal">
+<label><b>Photo</b></label>
+<input type="file" accept="image/*" onchange="loadPhoto(event)">
+<label><b>Name</b></label>
+<input type="text" id="name" value="Rohan Gupta" oninput="updateData()">
+<label><b>Job Title</b></label>
+<input type="text" id="title" value="Software Engineer" oninput="updateData()">
+<label><b>Phone</b></label>
+<input type="text" id="phone" value="+1 (555) 123-4567" oninput="updateData()">
+<label><b>Email</b></label>
+<input type="text" id="email" value="rohan@gmail.com" oninput="updateData()">
+<label><b>Address</b></label>
+<input type="text" id="address" value="123 Main Street, CA" oninput="updateData()">
+<label><b>Website</b></label>
+<input type="text" id="website" value="www.alexrohan.dev" oninput="updateData()">
+<label><b>Summary</b></label>
+<textarea id="profile" oninput="updateData()">Passionate full-stack developer with 5+ years of experience building scalable web applications.Skilled in React, Node.js, and cloud technologies.</textarea>
+</div>
+
+<!-- SKILLS -->
+<div id="skills" class="hidden">
+    <label><b>Skills</b></label>
+    <div id="skillsContainer">
+        <div class="skill-box">
+<input type="text" id="skill1" value="React & TypeScript" oninput="updateData()">
+
+<div class="stars">
+<span onclick="setRating(this,1)">★</span>
+<span onclick="setRating(this,2)">★</span>
+<span onclick="setRating(this,3)">★</span>
+<span onclick="setRating(this,4)">★</span>
+<span onclick="setRating(this,5)">★</span>
+</div>
+</div>
+
+<div class="skill-box">
+<input type="text" id="skill2" value="Node.js & Express" oninput="updateData()">
+
+<div class="stars">
+<span onclick="setRating(this,1)">★</span>
+<span onclick="setRating(this,2)">★</span>
+<span onclick="setRating(this,3)">★</span>
+<span onclick="setRating(this,4)">★</span>
+<span onclick="setRating(this,5)">★</span>
+</div>
+</div>
+
+<div class="skill-box">
+<input type="text" id="skill3" value="MongoDB" oninput="updateData()">
+
+<div class="stars">
+<span onclick="setRating(this,1)">★</span>
+<span onclick="setRating(this,2)">★</span>
+<span onclick="setRating(this,3)">★</span>
+<span onclick="setRating(this,4)">★</span>
+<span onclick="setRating(this,5)">★</span>
+</div>
+</div>
+<div class="skill-box">
+<input type="text" id="skill4" value="AWS & Docker" oninput="updateData()">
+
+<div class="stars">
+<span onclick="setRating(this,1)">★</span>
+<span onclick="setRating(this,2)">★</span>
+<span onclick="setRating(this,3)">★</span>
+<span onclick="setRating(this,4)">★</span>
+<span onclick="setRating(this,5)">★</span>
+</div>
+</div>
+<div class="skill-box">
+<input type="text" id="skill5" value="CI & CD" oninput="updateData()">
+
+<div class="stars">
+<span onclick="setRating(this,1)">★</span>
+<span onclick="setRating(this,2)">★</span>
+<span onclick="setRating(this,3)">★</span>
+<span onclick="setRating(this,4)">★</span>
+<span onclick="setRating(this,5)">★</span>
+</div>
+</div>
+</div>
+<button onclick="addSkill()">+ Add Skill</button>
+<br>
+<label><b>Languages</b></label><br>
+<div id="langContainer">
+    <div class="lang-box">
+<input type="text" id="lang1" value="English - Native" oninput="updateData()">
+
+<div class="stars">
+<span onclick="setRating(this,1)">★</span>
+<span onclick="setRating(this,2)">★</span>
+<span onclick="setRating(this,3)">★</span>
+<span onclick="setRating(this,4)">★</span>
+<span onclick="setRating(this,5)">★</span>
+</div>
+</div>
+<div class="lang-box">
+<input type="text" id="lang2" value="Spanish - Fluent" oninput="updateData()">
+
+<div class="stars">
+<span onclick="setRating(this,1)">★</span>
+<span onclick="setRating(this,2)">★</span>
+<span onclick="setRating(this,3)">★</span>
+<span onclick="setRating(this,4)">★</span>
+<span onclick="setRating(this,5)">★</span>
+</div>
+</div>
+<div class="lang-box">
+<input type="text" id="lang3" value="French - Intermediate" oninput="updateData()">
+
+<div class="stars">
+<span onclick="setRating(this,1)">★</span>
+<span onclick="setRating(this,2)">★</span>
+<span onclick="setRating(this,3)">★</span>
+<span onclick="setRating(this,4)">★</span>
+<span onclick="setRating(this,5)">★</span>
+</div>
+</div>
+</div>
+<button onclick="addLanguage()">+ Add Language</button>
+</div>
+
+<!-- HISTORY -->
+<div id="history" class="hidden">
+<label><b>Education</b></label>
+<div id="eduContainer">
+<input type="text" id="education1" value="B.Sc. Computer science" oninput="updateData()">
+<input type="text" id="education2" value="Stanford University (2016-2020)" oninput="updateData()">
+<textarea id="education4" oninput="updateData()">Graduated with honours.Focused on software engineering and distributed systems.</textarea>
+</div>
+<button onclick="addEducation()">+ Add Education</button>
+<br>
+<label><b>Experience</b></label>
+<div id="expContainer">
+<input type="text" id="experience1" value="Software Engineer" oninput="updateData()">
+<input type="text" id="experience2" value="Intern-TechCorp |2023(6 months)" oninput="updateData()">
+<textarea id="experience3" oninput="updateData()">Assisted in developing a web-based applications ,tested and debugged software modules.</textarea>
+</div>
+<button onclick="addExperience()">+ Add Experience</button>
+<br>
+<label><b>Projects</b></label>
+<div id="projContainer">
+<textarea id="project" oninput="updateData()">Resume Builder</textarea>
+</div>
+<button onclick="addProject()">+ Add Project</button>
+</div>
+</div>
+
+<!-- RESUME PREVIEW -->
+<div class="resume" id="resume">
+<div class="sidebar">
+<img id="photo" src="https://via.placeholder.com/120">
+<div></div>
+<h3>CONTACT</h3>
+<lable><b>Phone</b></lable><span>&#128222</span><p id="r_phone"></p>
+<lable><b>Email</b></lable><span>&#9993</span><p id="r_email"></p>
+<lable><b>Address</b></lable><span>&#128205</span><p id="r_address"></p>
+<lable><b>Website</b></lable><span>&#127760</span><p id="r_website"></p>
+
+<h3>SKILLS</h3>
+<div id="r_skills"></div>
+
+<h3>LANGUAGES</h3>
+<div id="r_languages"></div>
+</div>
+<div class="content">
+
+<h1 id="r_name"></h1>
+<p id="r_title"></p>
+
+<div class="section">
+<h3>PROFILE</h3>
+<p id="r_profile"></p>
+</div>
+
+<div class="section">
+<h3>EDUCATION</h3>
+<div id="r_education"></div>
+</div>
+
+<div class="section">
+<h3>EXPERIENCE</h3>
+<div id="r_experience"></div>
+</div>
+
+<div class="section">
+<h3>PROJECT</h3>
+<div id="r_projects"></div>
+</div>
+</div>
+</div>
+<div id="passwordPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000;">
+
+    <div style="background:rgb(245, 204, 252); padding:25px; border-radius:12px; width:320px; text-align:center;">
+        <h3>Create Password</h3>
+        <p style="font-size:13px; color:gray;">Format: First 4 letters of name + DOB (DDMM)</p>
+
+        <input type="text" id="userName" placeholder="Enter your name"><br><br>
+        <input type="date" id="userDOB"><br><br>
+
+        <button onclick="generatePassword()">Generate Password</button>
+
+        <p id="generatedPassword" style="margin-top:10px; font-weight:bold;"></p>
+
+        <button onclick="finalDownload()" style="margin-top:10px;">Download Resume</button>
+    </div>
+
+</div>
+<script>
+
+function showTab(tab,btn){
+["personal","skills","history"].forEach(t=>{
+document.getElementById(t).classList.add("hidden");
+});
+document.getElementById(tab).classList.remove("hidden");
+
+document.querySelectorAll(".tabs button")
+.forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+}
+
+function updateData(){
+
+document.querySelectorAll("input,textarea").forEach(input=>{
+
+let preview=document.getElementById("r_"+input.id);
+
+if(preview){
+preview.innerText=input.value;
+}
+
+});
+
+updateDynamic();
+}
+
+function updateDynamic(){
+let skillHTML="";
+
+document.querySelectorAll("#skillsContainer input").forEach(input=>{
+
+let box=input.parentElement;
+let stars="";
+let rating=0;
+
+if(box.querySelector(".stars")){
+rating=box.querySelectorAll(".active").length;
+}
+
+if(input.value.trim() !== ""){
+
+if(rating>0){
+
+for(let i=1;i<=5;i++){
+stars += i<=rating ? "★" : "☆";
+}
+
+skillHTML += `
+<div class="skill-row">
+<span>${input.value}</span>
+<span class="star-display">${stars}</span>
+</div>
+`;
+
+}else{
+
+skillHTML += `
+<div class="skill-row">
+<span>${input.value}</span>
+</div>
+`;
+
+}
+
+}
+
+});
+
+document.getElementById("r_skills").innerHTML=skillHTML;
+let langHTML="";
+
+document.querySelectorAll("#langContainer input").forEach(input=>{
+
+let box=input.parentElement;
+let stars="";
+let rating=0;
+
+if(box.querySelector(".stars")){
+rating=box.querySelectorAll(".active").length;
+}
+
+if(input.value.trim() !== ""){
+
+if(rating>0){
+
+for(let i=1;i<=5;i++){
+stars += i<=rating ? "★" : "☆";
+}
+
+langHTML += `
+<div class="lang-row">
+<span>${input.value}</span>
+<span class="star-display">${stars}</span>
+</div>
+`;
+
+}else{
+
+langHTML += `
+<div class="lang-row">
+<span>${input.value}</span>
+</div>
+`;
+
+}
+
+}
+
+});
+
+document.getElementById("r_languages").innerHTML=langHTML;
+
+let eduHTML="";
+document.querySelectorAll("#eduContainer input,#eduContainer textarea").forEach(i=>{
+eduHTML += "<p>"+i.value+"</p>";
+});
+document.getElementById("r_education").innerHTML=eduHTML;
+
+let expHTML="";
+document.querySelectorAll("#expContainer input,#expContainer textarea").forEach(i=>{
+expHTML += "<p>"+i.value+"</p>";
+});
+document.getElementById("r_experience").innerHTML=expHTML;
+
+let projHTML="";
+document.querySelectorAll("#projContainer input,#projContainer textarea").forEach(i=>{
+projHTML += "<p>"+i.value+"</p>";
+});
+document.getElementById("r_projects").innerHTML=projHTML;
+
+}
+
+function loadPhoto(event){
+const reader=new FileReader();
+reader.onload=function(){
+document.getElementById("photo").src=reader.result;
+}
+reader.readAsDataURL(event.target.files[0]);
+}
+
+function downloadPDF(){
+    const element = document.getElementById("resume");
+    const password = localStorage.getItem("resumePassword");
+
+    if(!password){
+        alert("Password not found!");
+        return;
+    }
+
+    const opt = {
+        margin: 10,
+        filename: 'resume.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 2 },
+        jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', 
+            orientation: 'portrait',
+            encryption: {
+                userPassword: password,   // 👈 THIS IS IMPORTANT
+                ownerPassword: password,
+                userPermissions: ["print", "copy"]
+            }
+        }
+    };
+
+    html2pdf().set(opt).from(element).save();
+}
+
+updateData();
+let skillCount = 5;
+let langCount = 3;
+let eduCount = 2;
+let expCount = 2;
+let projCount = 1;
+
+function addSkill(){
+
+skillCount++;
+
+let wrapper=document.createElement("div");
+wrapper.className="skill-box";
+
+let input=document.createElement("input");
+input.type="text";
+input.id="skill"+skillCount;
+input.placeholder="Enter Skill";
+input.oninput=updateData;
+
+let stars=document.createElement("div");
+stars.className="stars";
+
+for(let i=1;i<=5;i++){
+
+let star=document.createElement("span");
+star.innerHTML="★";
+
+star.onclick=function(){
+setRating(star,i);
+};
+
+stars.appendChild(star);
+}
+
+let del=document.createElement("button");
+del.innerText="Delete";
+del.style.marginLeft="5px";
+
+del.onclick=function(){
+wrapper.remove();
+updateData();
+}
+
+wrapper.appendChild(input);
+wrapper.appendChild(stars);
+wrapper.appendChild(del);
+
+document.getElementById("skillsContainer").appendChild(wrapper);
+
+updateData();
+
+}
+
+function addLanguage(){
+
+langCount++;
+
+let wrapper=document.createElement("div");
+wrapper.className="lang-box";
+
+let input=document.createElement("input");
+input.type="text";
+input.id="lang"+langCount;
+input.placeholder="Enter Language";
+input.oninput=updateData;
+
+let stars=document.createElement("div");
+stars.className="stars";
+
+for(let i=1;i<=5;i++){
+
+let star=document.createElement("span");
+star.innerHTML="★";
+
+star.onclick=function(){
+setRating(star,i);
+};
+
+stars.appendChild(star);
+}
+
+let del=document.createElement("button");
+del.innerText="Delete";
+
+del.onclick=function(){
+wrapper.remove();
+updateData();
+}
+
+wrapper.appendChild(input);
+wrapper.appendChild(stars);
+wrapper.appendChild(del);
+
+document.getElementById("langContainer").appendChild(wrapper);
+
+updateData();
+
+}
+
+function addEducation(){
+
+eduCount++;
+
+let wrapper=document.createElement("div");
+
+let input=document.createElement("input");
+input.type="text";
+input.id="education"+eduCount;
+input.placeholder="Enter Education";
+input.oninput=updateData;
+
+let textarea=document.createElement("textarea");
+textarea.placeholder="Description";
+textarea.oninput=updateData;
+
+let del=document.createElement("button");
+del.innerText="Delete";
+
+del.onclick=function(){
+wrapper.remove();
+updateData();
+}
+
+wrapper.appendChild(input);
+wrapper.appendChild(textarea);
+wrapper.appendChild(del);
+
+document.getElementById("eduContainer").appendChild(wrapper);
+
+updateData();
+}
+
+function addExperience(){
+
+expCount++;
+
+let wrapper=document.createElement("div");
+
+let input=document.createElement("input");
+input.type="text";
+input.id="experience"+expCount;
+input.placeholder="Enter Experience";
+input.oninput=updateData;
+
+let textarea=document.createElement("textarea");
+textarea.placeholder="Description";
+textarea.oninput=updateData;
+
+let del=document.createElement("button");
+del.innerText="Delete";
+
+del.onclick=function(){
+wrapper.remove();
+updateData();
+}
+
+wrapper.appendChild(input);
+wrapper.appendChild(textarea);
+wrapper.appendChild(del);
+
+document.getElementById("expContainer").appendChild(wrapper);
+
+updateData();
+}
+function addProject(){
+
+projCount++;
+
+let wrapper=document.createElement("div");
+
+let textarea=document.createElement("textarea");
+textarea.placeholder="Enter Project";
+textarea.oninput=updateData;
+
+let del=document.createElement("button");
+del.innerText="Delete";
+
+del.onclick=function(){
+wrapper.remove();
+updateData();
+}
+
+wrapper.appendChild(textarea);
+wrapper.appendChild(del);
+
+document.getElementById("projContainer").appendChild(wrapper);
+
+updateData();
+}
+function setRating(el,rating){
+
+let stars = el.parentElement.querySelectorAll("span");
+
+stars.forEach((star,index)=>{
+if(index < rating){
+star.classList.add("active");
+}else{
+star.classList.remove("active");
+}
+});
+
+setTimeout(()=>{
+updateData();
+},2);
+
+}
+
+function previewResume(){
+
+updateData();   // update latest edits
+updateDynamic();
+
+let resume = document.getElementById("resume").cloneNode(true).outerHTML;
+let styles = document.querySelector("style").innerHTML;
+
+let previewWindow = window.open("", "_blank", "width=1000,height=700");
+
+previewWindow.document.write(`
+<html>
+<head>
+<title>Resume Preview</title>
+
+<style>
+${styles}
+</style>
+
+</head>
+
+<body>
+
+<div style="position:fixed;top:20px;right:20px;z-index:1000;">
+<button onclick="window.close()" 
+style="padding:10px 18px;background:#6c63ff;color:white;border:none;border-radius:8px;margin-right:10px;cursor:pointer;">
+Edit Resume
+</button>
+
+<button onclick="window.print()" 
+style="padding:10px 18px;background:#6c63ff;color:white;border:none;border-radius:8px;cursor:pointer;">
+Print
+</button>
+</div>
+
+${resume}
+
+</body>
+</html>
+`);
+
+previewWindow.document.close();
+
+}
+function showPasswordPopup(){
+    document.getElementById("passwordPopup").style.display = "flex";
+
+    // Auto-fill name from resume
+    document.getElementById("userName").value = document.getElementById("name").value;
+}
+
+function generatePassword(){
+    var name = document.getElementById("userName").value.trim();
+    var dob = document.getElementById("userDOB").value;
+
+    if(name.length < 4 || !dob){
+        alert("Enter valid name and DOB");
+        return;
+    }
+
+    var namePart = name.substring(0,4).toUpperCase();
+
+    var date = new Date(dob);
+    var day = ("0" + date.getDate()).slice(-2);
+    var month = ("0" + (date.getMonth()+1)).slice(-2);
+
+    var password = namePart + day + month;
+
+    document.getElementById("generatedPassword").innerText = "Password: " + password;
+
+    localStorage.setItem("resumePassword", password);
+}
+
+function finalDownload(){
+    var password = localStorage.getItem("resumePassword");
+
+    if(!password){
+        alert("Generate password first!");
+        return;
+    }
+
+    alert("Resume Downloaded!\nPassword: " + password);
+
+    // CALL YOUR EXISTING PDF FUNCTION
+    downloadPDF();
+
+    document.getElementById("passwordPopup").style.display = "none";
+}
+window.onload = function() {
+    var currentUser = localStorage.getItem("currentUser");
+
+    if(currentUser){
+        document.getElementById("usernameDisplay").innerText = currentUser;
+    }
+};
+function logout(){
+    localStorage.removeItem("currentUser");
+    window.location.href = "combine2.html";
+}
+</script>
+</body>
+</html>
